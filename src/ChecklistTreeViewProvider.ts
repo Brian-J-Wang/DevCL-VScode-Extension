@@ -10,6 +10,8 @@ class ChecklistTreeViewProvider implements TreeDataProvider<TreeItem> {
     getTreeItem(element: DevCLTreeItem): TreeItem | Thenable<TreeItem> {
         return element;
     }
+
+    //called recursively
     getChildren(element?: DevCLTreeItem | undefined): TreeItem[] {
         if (element === undefined) {
             return this.data.map((child) => {
@@ -25,9 +27,7 @@ class ChecklistTreeViewProvider implements TreeDataProvider<TreeItem> {
             } else {
                 return [];
             }
-        } 
-
-        if (element.type == "file") {
+        } else if (element.type == "file") {
             if (element.children) {
                 return element.children.map((child) => {
                     return CheckListFactory(child as ChecklistItem);

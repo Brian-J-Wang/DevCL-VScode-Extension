@@ -12,6 +12,15 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "devcl.addTask",
+          "group": "z_commands"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "devcl.helloMe",
@@ -20,6 +29,14 @@
       {
         "command": "devcl.helloWarning",
         "title": "Hello Warning"
+      },
+      {
+        "command": "devcl.addTask",
+        "title": "Add Task"
+      },
+      {
+        "command": "devcl.openTaskEditor",
+        "title": "Open Task Editor"
       }
     ],
     "viewsContainers": {

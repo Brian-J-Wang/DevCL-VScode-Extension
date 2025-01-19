@@ -6,6 +6,7 @@ import ChecklistTreeViewProvider from './ChecklistTreeViewProvider';
 import * as fs from 'fs';
 import * as path from 'path'
 import { DirectoryItem } from './interfaces';
+import RegisterContexts from './context';
 
 
 
@@ -67,6 +68,11 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.window.registerTreeDataProvider('devcl.treeTest', new ChecklistTreeViewProvider(data))
 	)
+
+	const devcl_openTaskEditor = vscode.commands.registerCommand('devcl.openTaskEditor', () => {
+	})
+
+	RegisterContexts(context);
 }
 
 // This method is called when your extension is deactivated
