@@ -43,7 +43,6 @@ class DevCLTreeItem extends TreeItem {
         super(label, collapsibleState);
         this.tooltip = 'Hovering';
         this.description = "This is the description"
-        this.checkboxState = TreeItemCheckboxState.Unchecked;
     }
 }
 
@@ -58,7 +57,14 @@ class CheckListItemTreeItem extends TreeItem {
 }
 
 function TreeFactory(item: DirectoryItem) {
-    return new DevCLTreeItem(item.name, TreeItemCollapsibleState.Expanded, item.type, item.children);
+    if (item.type == "file") {
+        if (item.children.length == 0) {
+            return new DevCLTreeItem(item.name, TreeItemCollapsibleState.None, item.type, item.children);
+        }
+    } else {
+        return new DevCLTreeItem(item.name, TreeItemCollapsibleState.Collapsed, item.type, item.children);
+    }
+    
 }
 
 function CheckListFactory(item: ChecklistItem) {
