@@ -1,14 +1,42 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import ChecklistViewProvider from './ChecklistViewProvider';
+import ChecklistTreeViewProvider from './ChecklistTreeViewProvider';
+import * as fs from 'fs';
+import * as path from 'path'
+
+
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "devcl" is now active!');
+	const storagePath = context.storageUri?.fsPath;
+	if (storagePath && !fs.existsSync(storagePath)) {
+		fs.mkdirSync(storagePath);
+	}
+	
+	const data = [
+		{
+			type: "folder",
+			devclItems: [], 
+			children: [
+				{
+					type: "file",
+					devclItems: [
+						{
+							title: "Read the book",
+							checked: false,
+						},
+						{
+							title: "touch some grass",
+							checked: true
+						}
+					]
+				}
+			]
+		}
+	]
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
@@ -24,6 +52,17 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showErrorMessage("hello world!");
 	})
 	context.subscriptions.push(devcl_helloWarning);
+
+	context.subscriptions.push(
+		vscode.window.registerWebviewViewProvider('devcl.checklist', new ChecklistViewProvider(context.extensionUri))
+	);
+
+	const rootPath = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0
+		? vscode.workspace.workspaceFolders[0].uri.fsPath
+		: undefined;
+	context.subscriptions.push(
+		vscode.window.registerTreeDataProvider('devcl.treeTest', new ChecklistTreeViewProvider(data))
+	)
 }
 
 // This method is called when your extension is deactivated

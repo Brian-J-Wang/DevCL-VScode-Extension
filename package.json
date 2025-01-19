@@ -21,7 +21,37 @@
         "command": "devcl.helloWarning",
         "title": "Hello Warning"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "checklistContainer",
+          "title": "Check List",
+          "icon": "resources/icon.svg"
+        },
+        {
+          "id": "TreeTest",
+          "title": "Check List",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "checklistContainer": [
+        {
+          "type": "webview",
+          "id": "devcl.checklist",
+          "name": "Check List"
+        }
+      ],
+      "TreeTest": [
+        {
+          "type": "tree",
+          "id": "devcl.treeTest",
+          "name": "Tree Test"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
