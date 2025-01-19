@@ -1,9 +1,11 @@
-interface DirectoryItem {
+export interface DirectoryItem {
 	type: "folder" | "file",
-	devclItems: [],
-	children: DirectoryItem,
+    name: string,
+	devclItems: ChecklistItem[],
+	children: DirectoryItem[],
 }
 
-interface ChecklistItem {
-    
+export interface ChecklistItem {
+    title: string,
+    checked: boolean
 }

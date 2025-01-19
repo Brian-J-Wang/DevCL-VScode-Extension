@@ -5,6 +5,7 @@ import ChecklistViewProvider from './ChecklistViewProvider';
 import ChecklistTreeViewProvider from './ChecklistTreeViewProvider';
 import * as fs from 'fs';
 import * as path from 'path'
+import { DirectoryItem } from './interfaces';
 
 
 
@@ -16,13 +17,15 @@ export function activate(context: vscode.ExtensionContext) {
 		fs.mkdirSync(storagePath);
 	}
 	
-	const data = [
+	const data: DirectoryItem[] = [
 		{
 			type: "folder",
+			name: "src",
 			devclItems: [], 
 			children: [
 				{
 					type: "file",
+					name: "extension.ts",
 					devclItems: [
 						{
 							title: "Read the book",
@@ -32,7 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
 							title: "touch some grass",
 							checked: true
 						}
-					]
+					],
+					children: []
 				}
 			]
 		}
