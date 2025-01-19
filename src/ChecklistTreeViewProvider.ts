@@ -17,19 +17,28 @@ class ChecklistTreeViewProvider implements TreeDataProvider<TreeItem> {
             });
         }
 
-        if (element.children) {
-            if (element.type == "folder") {
+        if (element.type == 'folder') {
+            if (element.children) {
                 return element.children.map((child) => {
                     return TreeFactory(child as DirectoryItem);
                 });
             } else {
+                return [];
+            }
+        } 
+
+        if (element.type == "file") {
+            if (element.children) {
                 return element.children.map((child) => {
                     return CheckListFactory(child as ChecklistItem);
                 })
+            } else {
+                return [];
             }
-        } else {
-            return [];
+            
         }
+
+        return [];
     }
 }
 
@@ -58,13 +67,10 @@ class CheckListItemTreeItem extends TreeItem {
 
 function TreeFactory(item: DirectoryItem) {
     if (item.type == "file") {
-        if (item.children.length == 0) {
-            return new DevCLTreeItem(item.name, TreeItemCollapsibleState.None, item.type, item.children);
-        }
+        return new DevCLTreeItem(item.name, TreeItemCollapsibleState.Collapsed, item.type, item.devclItems);
     } else {
         return new DevCLTreeItem(item.name, TreeItemCollapsibleState.Collapsed, item.type, item.children);
     }
-    
 }
 
 function CheckListFactory(item: ChecklistItem) {
